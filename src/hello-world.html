@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Components</title>
+    <style>
+        h1 {
+            font-size: 20px;
+            color: yellow;
+        }
+    </style>
+    </head>
+    <body>
+        <div></div>
+        <hello-world></hello-world>
+        <h1>Hello World! 外部</h1>
+        <script type="module">
+            class HelloWorld extends HTMLElement {
+                constructor() {
+                    super();
+                    this.attachShadow({ mode: 'open' });
+                    this.shadowRoot.innerHTML = `
+                        <style>
+                            h1 {
+                                font-size: 30px;
+                                display: block;
+                                padding: 10px;
+                                background-color: #eee;
+                            }
+                        </style>
+                        <h1>Hello World! 自定义组件内部</h1>
+                    `;
+                }
+
+                tag = 'hello-world'
+        
+                say(something) {
+                    console.log(`hello world, I want to say ${this.tag} ${something}`)
+                }
+            }
+
+            window.customElements.define('hello-world', HelloWorld);
+            const hw = document.querySelector('hello-world'); 
+            hw.say('good'); 
+        </script>
+    </body>
+</html>
